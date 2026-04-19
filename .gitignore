@@ -1,0 +1,43 @@
+# OS
+.DS_Store
+
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
+.venv/
+venv/
+
+# Test and coverage artifacts
+.coverage
+.coverage.*
+htmlcov/
+
+# Node and npm caches
+node_modules/
+.npm-cache/
+
+# Local runtime state and databases
+.deer-flow/
+*.db
+*.sqlite
+*.sqlite3
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+config.yaml
+extensions_config.json
+
+# Temporary artifacts
+*.tgz
+package/
+
+test.md

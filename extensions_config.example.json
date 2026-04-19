@@ -36,6 +36,37 @@
       ],
       "env": {},
       "description": "PostgreSQL database access"
+    },
+    "baidu-search": {
+      "enabled": true,
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "baidu-search-mcp",
+        "--max-result=5",
+        "--fetch-content-count=1",
+        "--max-content-length=2000"
+      ],
+      "env": {
+        "BAIDU_API_KEY": "$BAIDU_API_KEY",
+        "npm_config_cache": "/Users/sjl/Desktop/workspace/opensource/mini-deer-flow/.npm-cache"
+      },
+      "description": "Baidu web search MCP server"
+    },
+    "baidu-map": {
+      "enabled": true,
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@baidumap/mcp-server-baidu-map"
+      ],
+      "env": {
+        "BAIDU_MAP_API_KEY": "$BAIDU_MAP_API_KEY",
+        "npm_config_cache": "/Users/sjl/Desktop/workspace/opensource/mini-deer-flow/.npm-cache"
+      },
+      "description": "Baidu map MCP server (AK only)"
     }
   },
   "skills": {}

@@ -909,3 +909,105 @@ checkpointer:
 #   failure_threshold: 5
 #   # Time in seconds before attempting to recover (default: 60)
 #   recovery_timeout_sec: 60
+
+
+
+config_version: 7
+log_level: info
+
+token_usage:
+  enabled: false
+
+models:
+  - name: deepseek-reasoner
+    display_name: DeepSeek Reasoner
+    use: langchain_deepseek:ChatDeepSeek
+    model: deepseek-reasoner
+    api_key: $DEEPSEEK_API_KEY
+    timeout: 120.0
+    max_retries: 2
+    supports_thinking: true
+    supports_vision: false
+
+sandbox:
+  use: src.sandbox.local:LocalSandboxProvider
+  allow_host_bash: false
+  mounts:
+    - host_path: /Users/sjl/Desktop/workspace/opensource/mini-deer-flow
+      container_path: /mnt/project
+      read_only: false
+
+tools:
+  - name: web_search
+    group: web
+    use: src.community.ddg_search.tools:web_search_tool
+    max_results: 5
+  - name: web_fetch
+    group: web
+    use: src.community.jina_ai.tools:web_fetch_tool
+    timeout: 10
+  - name: image_search
+    group: web
+    use: src.community.image_search.tools:image_search_tool
+    max_results: 5
+  - name: ls
+    group: file:read
+    use: src.sandbox.tools:ls_tool
+  - name: read_file
+    group: file:read
+    use: src.sandbox.tools:read_file_tool
+  - name: glob
+    group: file:read
+    use: src.sandbox.tools:glob_tool
+    max_results: 200
+  - name: grep
+    group: file:read
+    use: src.sandbox.tools:grep_tool
+    max_results: 100
+  - name: write_file
+    group: file:write
+    use: src.sandbox.tools:write_file_tool
+  - name: str_replace
+    group: file:write
+    use: src.sandbox.tools:str_replace_tool
+  - name: bash
+    group: bash
+    use: src.sandbox.tools:bash_tool
+
+tool_groups:
+  - name: web
+  - name: file:read
+  - name: file:write
+  - name: bash
+
+skills:
+  path: skills
+
+memory:
+  enabled: true
+  storage_path: ""
+  debounce_seconds: 30
+
+checkpointer:
+  type: sqlite
+  connection_string: .deer-flow/checkpoints.db
+
+subagents:
+  timeout_seconds: 900
+
+live_sdk_smoke:
+  prompt: "Please reply with: SDK smoke test passed"
+  thread_id: "live-sdk-smoke"
+  assistant_id: "lead-agent"
+  model_name: "deepseek-reasoner"
+  timeout: 180.0
+  stream: true
+  include_mcp: false
+  tool_groups:
+    - file:read
+  subagent_enabled: false
+  max_concurrent_subagents: 2
+  show_custom_events: false
+  disable_readability_js: true
+  reset_thread: false
+  fresh_thread_id: true
